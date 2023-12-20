@@ -95,7 +95,7 @@ export default function MainForm() {
    const [email2, setEmail2] = useState("");
 
    const openai = new OpenAI({
-      apiKey: "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",
+      apiKey: import.meta.env.VITE_OPENAI_KEY,
       dangerouslyAllowBrowser: true,
    });
 
