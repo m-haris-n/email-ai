@@ -1,10 +1,12 @@
 import {
    Box,
    Button,
+   Checkbox,
    Container,
    CopyButton,
    Divider,
    Flex,
+   Group,
    Select,
    Text,
    TextInput,
@@ -75,7 +77,6 @@ export default function MainForm() {
             value.length > 0 ? null : "Please fill out the field",
          frameworkOfEmail: (value) =>
             value.length > 0 ? null : "Please fill out the field",
-
          targetCompany: (value) =>
             value.length > 0 ? null : "Please fill out the field",
          targetCompanyDomain: (value) =>
@@ -100,32 +101,22 @@ export default function MainForm() {
    });
 
    const handleGPT = async (e) => {
-      e.preventDefault(formdata);
-      const info = JSON.stringify(formdata);
+      e.preventDefault();
+      const info = JSON.stringify(formdata.values);
+      console.log(info);
 
       const msg1 = [
          ...baseMsg,
          {
             role: "user",
-            content:
-               prompt1p1 +
-               info +
-               "\n" +
-               prompt1p2 +
-               "use the following framwork:\n" +
-               framework1,
+            content: prompt1p1 + info + "\n" + prompt1p2,
          },
       ];
       const msg2 = [
          ...baseMsg,
          {
             role: "user",
-            content:
-               prompt2 +
-               info +
-               "\n" +
-               "use the following framwork:\n" +
-               framework1,
+            content: prompt2 + info,
          },
       ];
 
@@ -150,13 +141,9 @@ export default function MainForm() {
       <Container size={1400}>
          <Title my={40}>Tell us about your business!</Title>
          <form
-            onSubmit={formdata.onSubmit((values) => handleGPT(values))}
+            onSubmit={(e) => handleGPT(e)}
             className={"flex flex-col gap-y-4"}
          >
-            {/* <Flex
-               direction={"column"}
-               rowGap={16}
-            > */}
             <TextInput
                label={"Description of Your Product or Service"}
                maw={500}
@@ -249,7 +236,6 @@ export default function MainForm() {
             >
                Generate Email
             </Button>
-            {/* </Flex> */}
          </form>
          <Divider
             size={2}
