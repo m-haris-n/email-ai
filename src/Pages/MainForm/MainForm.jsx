@@ -8,13 +8,16 @@ import {
    Flex,
    Group,
    Loader,
+   Modal,
    Select,
+   Tabs,
    Text,
    TextInput,
    Textarea,
    Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
 import OpenAI from "openai";
 import React, { useState } from "react";
 
@@ -93,6 +96,8 @@ export default function MainForm() {
       },
    });
 
+   const [opened, { open, close }] = useDisclosure();
+
    const [email1, setEmail1] = useState("");
    const [email2, setEmail2] = useState("");
 
@@ -150,166 +155,194 @@ export default function MainForm() {
    };
 
    return (
-      <Container size={1400}>
-         <Title my={40}>Tell us about your business!</Title>
-         <form
-            onSubmit={(e) => handleGPT(e)}
-            className={"flex flex-col gap-y-4"}
+      <>
+         <Modal
+            opened={opened}
+            onClose={close}
          >
-            <TextInput
-               label={"Description of Your Product or Service"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("descriptionOfProduct")}
-            />
-            <TextInput
-               label={"Problems that Your Product/service Solves"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("problemTheProductSolves")}
-            />
-            <TextInput
-               label={"Unique Selling Point of your Product/Service"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("uniqueSellingPoint")}
-            />
-            <Select
-               label={"Framework for Email"}
-               maw={500}
-               data={[
-                  { label: "Chris Ritson Framework", value: framework1 },
-                  { label: "Chistian Krause framework", value: framework2 },
-               ]}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("frameworkOfEmail")}
-            />
-            <TextInput
-               label={"Target Company"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("targetCompany")}
-            />
-            <TextInput
-               label={"Key Finding about Target Company"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("targetCompanyKeyFindings")}
-            />
-            <TextInput
-               label={"Target Decision Maker Name"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("targetDecisionMaker")}
-            />
-            <TextInput
-               label={"Key Findings about Target Decision Maker"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("targetDdecisionMakerKeyFindings")}
-            />
-            <TextInput
-               label={"Subject Line Idea"}
-               maw={500}
-               disabled={false}
-               {...formdata.getInputProps("subjectLine")}
-            />
+            <Modal.Body>
+               <Tabs defaultValue={"framework1"}>
+                  <Tabs.List>
+                     <Tabs.Tab value={"framework1"}>Framework 1</Tabs.Tab>
+                     <Tabs.Tab value={"framework2"}>Framework 2</Tabs.Tab>
+                  </Tabs.List>
+                  <Tabs.Panel value={"framework1"}>
+                     <Text className={"whitespace-pre-wrap"}>{framework1}</Text>
+                  </Tabs.Panel>
+                  <Tabs.Panel value={"framework2"}>
+                     <Text className={"whitespace-pre-wrap"}>{framework2}</Text>
+                  </Tabs.Panel>
+               </Tabs>
+            </Modal.Body>
+         </Modal>
+         <Container size={1400}>
+            <Title my={40}>Tell us about your business!</Title>
+            <form
+               onSubmit={(e) => handleGPT(e)}
+               className={"flex flex-col gap-y-4"}
+            >
+               <TextInput
+                  label={"Description of Your Product or Service"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("descriptionOfProduct")}
+               />
+               <TextInput
+                  label={"Problems that Your Product/service Solves"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("problemTheProductSolves")}
+               />
+               <TextInput
+                  label={"Unique Selling Point of your Product/Service"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("uniqueSellingPoint")}
+               />
+               <Select
+                  label={"Framework for Email"}
+                  maw={500}
+                  data={[
+                     { label: "Chris Ritson Framework", value: framework1 },
+                     { label: "Chistian Krause framework", value: framework2 },
+                  ]}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("frameworkOfEmail")}
+               />
+               <Button
+                  onClick={open}
+                  w={200}
+                  variant={"outline"}
+               >
+                  Preview Frameworks
+               </Button>
+               <TextInput
+                  label={"Target Company"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("targetCompany")}
+               />
+               <TextInput
+                  label={"Key Finding about Target Company"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("targetCompanyKeyFindings")}
+               />
+               <TextInput
+                  label={"Target Decision Maker Name"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("targetDecisionMaker")}
+               />
+               <TextInput
+                  label={"Key Findings about Target Decision Maker"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("targetDdecisionMakerKeyFindings")}
+               />
+               <TextInput
+                  label={"Subject Line Idea"}
+                  maw={500}
+                  disabled={false}
+                  {...formdata.getInputProps("subjectLine")}
+               />
 
-            <TextInput
-               label={"Message Idea"}
-               maw={500}
-               disabled={false}
-               {...formdata.getInputProps("messageIdea")}
+               <TextInput
+                  label={"Message Idea"}
+                  maw={500}
+                  disabled={false}
+                  {...formdata.getInputProps("messageIdea")}
+               />
+               <TextInput
+                  label={"Tone of Message"}
+                  maw={500}
+                  disabled={false}
+                  {...formdata.getInputProps("toneOfMessage")}
+               />
+               <TextInput
+                  label={"Goal of the Email"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("goalOfEmail")}
+               />
+               <Button
+                  w={150}
+                  type={"submit"}
+               >
+                  Generate Email
+               </Button>
+            </form>
+            <Divider
+               size={2}
+               my={32}
             />
-            <TextInput
-               label={"Tone of Message"}
-               maw={500}
-               disabled={false}
-               {...formdata.getInputProps("toneOfMessage")}
-            />
-            <TextInput
-               label={"Goal of the Email"}
-               maw={500}
-               required={true}
-               disabled={false}
-               {...formdata.getInputProps("goalOfEmail")}
-            />
-            <Button
-               w={150}
-               type={"submit"}
-            >
-               Generate Email
-            </Button>
-         </form>
-         <Divider
-            size={2}
-            my={32}
-         />
-         <Flex direction={"column"}>
-            <Flex
-               direction={"row"}
-               justify={"space-between"}
-               columnGap={8}
-            >
-               <Text size={"xl"}>Sample 1</Text>
-               <CopyButton value={email1}>
-                  {({ copied, copy }) => (
-                     <Button
-                        onClick={copy}
-                        color={copied ? "teal" : "blue"}
-                        disabled={email1.length == 0}
-                     >
-                        {copied ? "Email Copied" : "Copy Email"}
-                     </Button>
-                  )}
-               </CopyButton>
+            <Flex direction={"column"}>
+               <Flex
+                  direction={"row"}
+                  justify={"space-between"}
+                  columnGap={8}
+               >
+                  <Text size={"xl"}>Sample 1</Text>
+                  <CopyButton value={email1}>
+                     {({ copied, copy }) => (
+                        <Button
+                           onClick={copy}
+                           color={copied ? "teal" : "blue"}
+                           disabled={email1.length == 0}
+                        >
+                           {copied ? "Email Copied" : "Copy Email"}
+                        </Button>
+                     )}
+                  </CopyButton>
+               </Flex>
+               <Text
+                  style={{ whiteSpace: "pre-wrap" }}
+                  maw={"100vw"}
+                  className={
+                     " border-2 border-gray-300 border-solid rounded-md p-4 my-4"
+                  }
+               >
+                  {email1load ? <Loader /> : email1}
+               </Text>
+               <Flex
+                  direction={"row"}
+                  justify={"space-between"}
+                  columnGap={8}
+               >
+                  <Text size={"xl"}>Sample 2</Text>
+                  <CopyButton value={email2}>
+                     {({ copied, copy }) => (
+                        <Button
+                           onClick={copy}
+                           color={copied ? "teal" : "blue"}
+                           disabled={email2.length == 0}
+                        >
+                           {copied ? "Email Copied" : "Copy Email"}
+                        </Button>
+                     )}
+                  </CopyButton>
+               </Flex>
+               <Text
+                  style={{ whiteSpace: "pre-wrap" }}
+                  maw={"100vw"}
+                  className={
+                     " border-2 border-gray-300 border-solid rounded-md p-4 my-4"
+                  }
+               >
+                  {email2load ? <Loader /> : email2}
+               </Text>
             </Flex>
-            <Text
-               style={{ whiteSpace: "pre-wrap" }}
-               maw={"100vw"}
-               className={
-                  " border-2 border-gray-300 border-solid rounded-md p-4 my-4"
-               }
-            >
-               {email1load ? <Loader /> : email1}
-            </Text>
-            <Flex
-               direction={"row"}
-               justify={"space-between"}
-               columnGap={8}
-            >
-               <Text size={"xl"}>Sample 2</Text>
-               <CopyButton value={email2}>
-                  {({ copied, copy }) => (
-                     <Button
-                        onClick={copy}
-                        color={copied ? "teal" : "blue"}
-                        disabled={email2.length == 0}
-                     >
-                        {copied ? "Email Copied" : "Copy Email"}
-                     </Button>
-                  )}
-               </CopyButton>
-            </Flex>
-            <Text
-               style={{ whiteSpace: "pre-wrap" }}
-               maw={"100vw"}
-               className={
-                  " border-2 border-gray-300 border-solid rounded-md p-4 my-4"
-               }
-            >
-               {email2load ? <Loader /> : email2}
-            </Text>
-         </Flex>
-         <Box h={80}></Box>
-      </Container>
+            <Box h={80}></Box>
+         </Container>
+      </>
    );
 }
