@@ -7,6 +7,7 @@ import {
    Divider,
    Flex,
    Group,
+   Loader,
    Select,
    Text,
    TextInput,
@@ -95,16 +96,20 @@ export default function MainForm() {
    const [email1, setEmail1] = useState("");
    const [email2, setEmail2] = useState("");
 
+   const [email1load, setEmail1load] = useState(false);
+   const [email2load, setEmail2load] = useState(false);
+
    const openai = new OpenAI({
       apiKey: import.meta.env.VITE_OPENAI_KEY,
       dangerouslyAllowBrowser: true,
    });
 
-   const handleGPT = async (e) => {
+   const handleGPT = (e) => {
       e.preventDefault();
       const info = JSON.stringify(formdata.values);
-      console.log(info);
-
+      // console.log(info);
+      setEmail1load(true);
+      setEmail2load(true);
       const msg1 = [
          ...baseMsg,
          {
@@ -122,19 +127,26 @@ export default function MainForm() {
 
       // console.log(msg1);
       // console.log(msg2);
-      const res1 = await openai.chat.completions.create({
-         messages: msg1,
-         model: "gpt-3.5-turbo",
-      });
-      const res2 = await openai.chat.completions.create({
-         messages: msg2,
-         model: "gpt-3.5-turbo",
-      });
+      openai.chat.completions
+         .create({
+            messages: msg1,
+            model: "gpt-3.5-turbo",
+         })
+         .then((res1) => {
+            setEmail1load(false);
+            setEmail1(res1.choices[0].message.content);
+         });
+      openai.chat.completions
+         .create({
+            messages: msg2,
+            model: "gpt-3.5-turbo",
+         })
+         .then((res2) => {
+            setEmail2load(false);
+            setEmail2(res2.choices[0].message.content);
+         });
       // console.log(res1);
       // console.log(res2);
-
-      setEmail1(res1.choices[0].message.content);
-      setEmail2(res2.choices[0].message.content);
    };
 
    return (
@@ -267,7 +279,7 @@ export default function MainForm() {
                   " border-2 border-gray-300 border-solid rounded-md p-4 my-4"
                }
             >
-               {email1}
+               {email1load ? <Loader /> : email1}
             </Text>
             <Flex
                direction={"row"}
@@ -294,7 +306,7 @@ export default function MainForm() {
                   " border-2 border-gray-300 border-solid rounded-md p-4 my-4"
                }
             >
-               {email2}
+               {email2load ? <Loader /> : email2}
             </Text>
          </Flex>
          <Box h={80}></Box>
