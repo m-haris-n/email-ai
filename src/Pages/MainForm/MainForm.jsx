@@ -41,11 +41,6 @@ Cheers / Best / Regards,
 \n
 `;
 
-const prompt1p1 = `Write a cold email to a prospect, below is the details for the cold email:\n`;
-const prompt1p2 = `Each sentence should have max 9 words so that it is easy to use. The language should be such that even 6th grader would understand what is talked about.\n`;
-
-const prompt2 = `You are an professional cold email copywriter. Write the best email that you think will get most discussions opened based on this specification. Use the data below:\n`;
-
 const baseMsg = [
    {
       role: "system",
@@ -54,6 +49,49 @@ const baseMsg = [
 ];
 
 // const suffix = "\nDon't add double next lines";
+
+const generatePrompts = (data, framework) => {
+   const prompt1 = `
+   Write a cold email to a prospect, below is the details for the cold email:
+   Product the company is trying to promote: ${data.descriptionOfProduct}
+   Problem the product/service solves: ${data.problemTheProductSolves}
+   Unique selling point of the product/service: ${data.uniqueSellingPoint}
+   Company we are sending to: ${data.targetCompany}
+   Company domain: ${data.targetCompanyDomain}
+   Key finding about the company: ${data.targetCompanyKeyFindings}
+   Decision maker name we are sending to: ${data.targetDecisionMaker}
+   Key finding about the decision maker: ${data.targetDdecisionMakerKeyFindings}
+   Subject line idea: ${data.subjectLine}
+   Message idea: ${data.messageIdea}
+   Tone of message: ${data.toneOfMessage}
+   Goal of the message: ${data.goalOfEmail}
+   Message templace:
+   "
+   ${framework}
+   "
+   \nEach sentence should have max 9 words so that it is easy to use. The language should be such that even 6th grader would understand what is talked about.
+   `;
+   const prompt2 = `
+   You are an professional cold email copywriter. Write the best email that you think will get most discussions opened based on this specification. Use the data below:
+   Product the company is trying to promote: ${data.descriptionOfProduct}
+   Problem the product/service solves: ${data.problemTheProductSolves}
+   Unique selling point of the product/service: ${data.uniqueSellingPoint}
+   Company we are sending to: ${data.targetCompany}
+   Company domain: ${data.targetCompanyDomain}
+   Key finding about the company: ${data.targetCompanyKeyFindings}
+   Decision maker name we are sending to: ${data.targetDecisionMaker}
+   Key finding about the decision maker: ${data.targetDdecisionMakerKeyFindings}
+   Subject line idea: ${data.subjectLine}
+   Message idea: ${data.messageIdea}
+   Tone of message: ${data.toneOfMessage}
+   Goal of the message: ${data.goalOfEmail}
+   Message templace:
+   "
+   ${framework}
+   "
+   `;
+   return [prompt1, prompt2];
+};
 
 export default function MainForm() {
    const formdata = useForm({
@@ -111,27 +149,23 @@ export default function MainForm() {
 
    const handleGPT = (e) => {
       e.preventDefault();
-      const info = JSON.stringify(formdata.values);
-      // console.log(info);
+
       setEmail1load(true);
       setEmail2load(true);
+
       const msg1 = [
-         ...baseMsg,
          {
             role: "user",
-            content: prompt1p1 + info + "\n" + prompt1p2,
+            content: generatePrompts(formdata.values)[0],
          },
       ];
       const msg2 = [
-         ...baseMsg,
          {
             role: "user",
-            content: prompt2 + info,
+            content: generatePrompts(formdata.values)[1],
          },
       ];
 
-      // console.log(msg1);
-      // console.log(msg2);
       openai.chat.completions
          .create({
             messages: msg1,
@@ -150,8 +184,6 @@ export default function MainForm() {
             setEmail2load(false);
             setEmail2(res2.choices[0].message.content);
          });
-      // console.log(res1);
-      // console.log(res2);
    };
 
    return (
@@ -226,6 +258,13 @@ export default function MainForm() {
                   required={true}
                   disabled={false}
                   {...formdata.getInputProps("targetCompany")}
+               />
+               <TextInput
+                  label={"Target Company Domain"}
+                  maw={500}
+                  required={true}
+                  disabled={false}
+                  {...formdata.getInputProps("targetCompanyDomain")}
                />
                <TextInput
                   label={"Key Finding about Target Company"}
