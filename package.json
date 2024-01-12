@@ -14,6 +14,7 @@
     "@mantine/form": "^7.3.2",
     "@mantine/hooks": "^7.3.2",
     "@mantine/modals": "^7.3.2",
+    "axios": "^1.6.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "openai": "^4.24.0",

@@ -6,6 +6,8 @@ import "@mantine/core/styles.css";
 import Home from "./Pages/Home/Home.jsx";
 import MainForm from "./Pages/MainForm/MainForm.jsx";
 import "./index.css";
+import Login from "./Pages/Login/Login.jsx";
+import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
 
 const router = createBrowserRouter([
    {
@@ -15,6 +17,14 @@ const router = createBrowserRouter([
    {
       path: "/form",
       element: <MainForm />,
+   },
+   {
+      path: "/login",
+      element: <Login />,
+   },
+   {
+      path: "/dashboard",
+      element: <Dashboard />,
    },
 ]);
 
