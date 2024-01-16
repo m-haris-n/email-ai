@@ -153,9 +153,9 @@ export default function MainForm() {
          currCreatedAt == null ||
          Date.parse(resTurns.data.createdAt) > Date.parse(currCreatedAt)
       ) {
-         setTurns(toString(resTurns.data.turns));
-         localStorage.setItem("turns", toString(resTurns.data.turns));
-         localStorage.setItem("createdAt", toString(resTurns.data.createdAt));
+         setTurns(resTurns.data.turns);
+         localStorage.setItem("turns", resTurns.data.turns);
+         localStorage.setItem("createdAt", resTurns.data.createdAt);
       } else {
          setTurns(currTurns);
       }
@@ -183,22 +183,16 @@ export default function MainForm() {
          let latestTurns = res.data.turns;
          let latestcreatedAt = Date.parse(res.data.createdAt);
          if (latestcreatedAt > currCreatedAt) {
-            localStorage.setItem("turns", toString(resTurns.data.turns));
-            localStorage.setItem(
-               "createdAt",
-               toString(resTurns.data.createdAt)
-            );
+            localStorage.setItem("turns", resTurns.data.turns);
+            localStorage.setItem("createdAt", resTurns.data.createdAt);
             currTurns = latestTurns;
             currCreatedAt = latestcreatedAt;
          }
          if (currTurns == 0) {
             return;
          }
-         setTurns(toString(localStorage.getItem("turns") - 1));
-         localStorage.setItem(
-            "turns",
-            toString(localStorage.getItem("turns") - 1)
-         );
+         setTurns(localStorage.getItem("turns") - 1);
+         localStorage.setItem("turns", localStorage.getItem("turns") - 1);
          const [prompt1, prompt2] = generatePromptDynamic(
             form.values,
             form.values.frameworkOfEmail,
