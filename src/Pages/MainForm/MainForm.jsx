@@ -162,7 +162,7 @@ export default function MainForm() {
 
       setFields(resField.data.fields);
 
-      let frames = resFw.data.framworks;
+      let frames = resFw.data.frameworks;
       let frameworkData = [];
       for (let frm of frames) {
          frameworkData.push({
