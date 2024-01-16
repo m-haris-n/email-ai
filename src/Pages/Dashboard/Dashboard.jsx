@@ -265,7 +265,7 @@ export default function Dashboard() {
          let temparr = [];
          let delLoads = {};
          let fetchedFields = res.data.fields;
-         console.log("fields", fetchedFields);
+         // console.log("fields", fetchedFields);
          for (let field of fetchedFields) {
             delLoads[field._id] = false;
             let temp = {
@@ -283,7 +283,7 @@ export default function Dashboard() {
       });
       getAllFrameworks().then((res) => {
          const fws = res.data.frameworks;
-         console.log("frameworks", fws);
+         // console.log("frameworks", fws);
          let temparr = [];
          for (let fw of fws) {
             let temp = {

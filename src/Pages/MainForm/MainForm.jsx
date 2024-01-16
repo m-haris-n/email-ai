@@ -163,7 +163,7 @@ export default function MainForm() {
       setFields(resField.data.fields);
 
       let frames = resFw.data.frameworks;
-      console.log("frameworks", frames);
+      // console.log("frameworks", frames);
       let frameworkData = [];
       for (let frm of frames) {
          frameworkData.push({
