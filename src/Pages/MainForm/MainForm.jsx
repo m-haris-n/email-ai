@@ -145,6 +145,8 @@ export default function MainForm() {
       const resTurns = await getLatestTurns();
 
       console.log("turns", resTurns.data);
+      console.log("turnsval", resTurns.data.turns);
+      console.log("turnsvalother", resTurns.data["turns"]);
       let currCreatedAt = localStorage.getItem("createdAt");
       let currTurns = localStorage.getItem("turns");
       if (
