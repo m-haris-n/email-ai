@@ -25,49 +25,6 @@ import { getAllFields } from "../../api/fieldHandlers";
 import { getAllFrameworks } from "../../api/frameworkHandlers";
 import { getLatestTurns } from "../../api/turnsHandler";
 
-const generatePrompts = (data, framework) => {
-   const prompt1 = `
-   Write a cold email to a prospect, below is the details for the cold email:
-   Product the company is trying to promote: ${data.descriptionOfProduct}
-   Problem the product/service solves: ${data.problemTheProductSolves}
-   Unique selling point of the product/service: ${data.uniqueSellingPoint}
-   Company we are sending to: ${data.targetCompany}
-   Company domain: ${data.targetCompanyDomain}
-   Key finding about the company: ${data.targetCompanyKeyFindings}
-   Decision maker name we are sending to: ${data.targetDecisionMaker}
-   Key finding about the decision maker: ${data.targetDdecisionMakerKeyFindings}
-   Subject line idea: ${data.subjectLine}
-   Message idea: ${data.messageIdea}
-   Tone of message: ${data.toneOfMessage}
-   Goal of the message: ${data.goalOfEmail}
-   Message templace:
-   "
-   ${framework}
-   "
-   \nEach sentence should have max 9 words so that it is easy to use. The language should be such that even 6th grader would understand what is talked about.
-   `;
-   const prompt2 = `
-   You are an professional cold email copywriter. Write the best email that you think will get most discussions opened based on this specification. Use the data below:
-   Product the company is trying to promote: ${data.descriptionOfProduct}
-   Problem the product/service solves: ${data.problemTheProductSolves}
-   Unique selling point of the product/service: ${data.uniqueSellingPoint}
-   Company we are sending to: ${data.targetCompany}
-   Company domain: ${data.targetCompanyDomain}
-   Key finding about the company: ${data.targetCompanyKeyFindings}
-   Decision maker name we are sending to: ${data.targetDecisionMaker}
-   Key finding about the decision maker: ${data.targetDdecisionMakerKeyFindings}
-   Subject line idea: ${data.subjectLine}
-   Message idea: ${data.messageIdea}
-   Tone of message: ${data.toneOfMessage}
-   Goal of the message: ${data.goalOfEmail}
-   Message templace:
-   "
-   ${framework}
-   "
-   `;
-   return [prompt1, prompt2];
-};
-
 const generatePromptDynamic = (data, framework, fields) => {
    const promptdata = fields.map((field) => {
       return `
