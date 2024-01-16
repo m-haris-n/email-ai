@@ -144,6 +144,7 @@ export default function MainForm() {
       const resFw = await getAllFrameworks();
       const resTurns = await getLatestTurns();
 
+      console.log("turns", resTurns.data);
       let currCreatedAt = localStorage.getItem("createdAt");
       let currTurns = localStorage.getItem("turns");
       if (
@@ -156,9 +157,6 @@ export default function MainForm() {
       } else {
          setTurns(currTurns);
       }
-      // setTurns(resTurns.data.turns);
-      // localStorage.setItem("turns", resTurns.data.turns);
-      // localStorage.setItem("createdAt", resTurns.data.createdAt);
 
       setFields(resField.data.fields);
 
