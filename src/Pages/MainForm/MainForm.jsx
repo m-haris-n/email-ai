@@ -153,6 +153,7 @@ export default function MainForm() {
          currCreatedAt == null ||
          Date.parse(resTurns.data.createdAt) > Date.parse(currCreatedAt)
       ) {
+         console.log(resTurns.data.turns);
          setTurns(resTurns.data.turns);
          localStorage.setItem("turns", resTurns.data.turns);
          localStorage.setItem("createdAt", resTurns.data.createdAt);
