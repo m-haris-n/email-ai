@@ -253,6 +253,14 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@mantine/code-highlight@^7.4.1":
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/@mantine/code-highlight/-/code-highlight-7.4.1.tgz#b27d5fae52d0042a7cba843eacf2748125e84ba9"
+  integrity sha512-zfUZuwP2hXnz3BC1H2tH/clc00NS36XQMmkMeVLTKDl8mU3vMiDPxjsODvrieLbat7rUfqaD9mqhJShwCL1D/g==
+  dependencies:
+    clsx "2.0.0"
+    highlight.js "^11.9.0"
+
 "@mantine/core@^7.3.2":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.3.2.tgz#70a87c272d727c772f2e884f13e5e63989363fbd"
@@ -1438,6 +1446,11 @@ hasown@^2.0.0:
   integrity sha512-vUptKVTpIJhcczKBbgnS+RtcuYMB8+oNzPK2/Hp3hanz8JmpATdmmgLgSaadVREkDm+e2giHwY3ZRkyjSIDDFA==
   dependencies:
     function-bind "^1.1.2"
+
+highlight.js@^11.9.0:
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.9.0.tgz#04ab9ee43b52a41a047432c8103e2158a1b8b5b0"
+  integrity sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==
 
 humanize-ms@^1.2.1:
   version "1.2.1"
